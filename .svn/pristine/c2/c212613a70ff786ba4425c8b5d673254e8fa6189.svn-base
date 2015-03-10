@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>  
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security.xsd">
+ 
+ 	 <!-- 开启security 注解 -->
+   	 <global-method-security secured-annotations="enabled"></global-method-security>
+
+     <!-- 不要过滤图片等静态资源，其中**代表可以跨越目录，*不可以跨越目录。--> 
+     	
+        <http  pattern="/**/*.jpg" security='none' />
+  		<http pattern="/**/*.png" security="none" />
+ 		<http pattern="/**/*.gif" security="none" />
+  		<http pattern="/**/*.css" security="none" />
+  		<http pattern="/**/*.js" security="none" />
+       
+         <!-- 登录页面和忘记密码页面不过滤 -->
+  		<http pattern="/login.jsp" security="none" />
+  		<http pattern="/*login.action" security="none" />
+  		
+  		<!-- 下面是对Action配置。表示具有访问/unitsManager资源的用户必须具有ROLE_PLATFORMADMIN的权限。
+                      当用户登录时，SS3将用户的所有权限从数据库中提取出来，形成列表。 当用户访问该资源时，SS3将
+                      登录用户的权限列表提出来跟下面配置的权限进行比对，若有，则允许访问，若没有，则给出AccessDeniedException。	-->
+		
+		<http>
+	  		<form-login login-page="/login.jsp" login-processing-url="/j_spring_security_check" authentication-failure-url="/login.jsp" default-target-url="/main.jsp"/>  
+	
+	  		<!-- "记住我"功能，采用持久化策略（将用户的登录信息存放在数据库表中） 
+	  		<remember-me data-source-ref="dataSource" />-->
+	  
+	  		<!-- 检测失效的sessionId,超时时定位到另外一个URL -->
+	  		<session-management invalid-session-url="/login.jsp">
+	        </session-management>
+
+  		</http>
+
+    <!--
+    Usernames/Passwords are
+        rod/koala
+        dianne/emu
+        scott/wombat
+        peter/opal
+    -->
+
+<!-- 认证管理器 -->
+    <authentication-manager>
+		<authentication-provider user-service-ref="myUserDetailService">
+		</authentication-provider>
+	</authentication-manager>
+	
+	<beans:bean id="myUserDetailService"
+        class="com.ctgu.util.MyUserDetailService" />
+        
+</beans:beans>

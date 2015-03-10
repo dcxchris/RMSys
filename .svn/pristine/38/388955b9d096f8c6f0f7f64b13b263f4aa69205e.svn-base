@@ -1,0 +1,10 @@
+@charset "utf-8";
+* {	margin: 0px ;padding: 0px;}
+body{overflow:hidden; width:1004px; margin:0 auto; font:12px/25px "宋体"; background-color: #c8dce7; background-repeat:repeat-x;}
+li{ list-style-type:none;}
+a{ text-decoration:none; color:#FFF;}
+a:hover{ text-decoration:underline;}
+.main{ margin:0 auto; background-image:url(../images/bg.png); background-repeat:no-repeat; background-position:0px 30px; height:650px;}
+.main ul{ padding-top:310px; width:300px;}
+.main li{width:310px;margin-left:620px; color:#25729e; padding-top:6px;_padding-top:8px;}
+.main p{ margin-left:690px; margin-top:10px;}
